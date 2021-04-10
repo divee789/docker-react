@@ -5,5 +5,15 @@ services:
 before_install:
   - docker build -t divee789/docker-react -f Dockerfile.dev .
 
-script:
-  - docker run divee789/docker-react
+deploy:
+  provider: elasticbeanstalk
+  region: "us-east-2"
+  app: "docker-react"
+  env: "Dockerreact-env"
+  bucket_name: "elasticbeanstalk-us-east-2-970294567762"
+  bucket_path: "docker-react"
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key:
+    secure: "$AWS_SECRET_KEY"
